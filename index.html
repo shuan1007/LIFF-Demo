@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIFF 抽獎大冒險</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+    <h1 id="welcome">載入中...</h1>
+    <img id="user-avatar" style="width:100px; border-radius:50%;">
+    
+    <button onclick="drawPrize()" style="padding: 20px;">點我抽獎！</button>
+
+    <script>
+        async function main() {
+            await liff.init({ liffId: "2009826317-dfhBdG2C" }); // 填入你的 ID
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            } else {
+                const profile = await liff.getProfile();
+                document.getElementById("welcome").innerText = "嗨，" + profile.displayName;
+                document.getElementById("user-avatar").src = profile.pictureUrl;
+            }
+        }
+        main();
+    </script>
+</body>
+</html>
