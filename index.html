@@ -8,11 +8,11 @@
     <h1 id="welcome">載入中...</h1>
     <img id="user-avatar" style="width:100px; border-radius:50%;">
     
-    <button onclick="drawPrize()" style="padding: 20px;">點我抽獎！</button>
+    <button onclick="drawPrize()" style="padding: 20px;">點我抽大獎！</button>
 
     <script>
         async function main() {
-            await liff.init({ liffId: "2009826317-dfhBdG2C" }); // 填入你的 ID
+            await liff.init({ liffId: "2009826317-dfhBdG2C" }); 
             if (!liff.isLoggedIn()) {
                 liff.login();
             } else {
@@ -20,8 +20,26 @@
                 document.getElementById("welcome").innerText = "嗨，" + profile.displayName;
                 document.getElementById("user-avatar").src = profile.pictureUrl;
             }
-        }
+        }       
         main();
+
+        async function drawPrize() {
+            const prizes = ["一等獎：PS5", "二等獎：Switch", "三等獎：謝謝再連絡"];
+            const result = prizes[Math.floor(Math.random() * prizes.length)];
+
+            alert("抽獎結果：" + result);
+
+            // 將結果送回 LINE 聊天室
+            if (liff.isInClient()) { // 確保是在 LINE App 內開啟
+            await liff.sendMessages([
+                {
+                    "type": "text",
+                    "text": "🎉 我剛參加了抽獎，抽到了：" + result + "！"
+                }
+            ]);
+            liff.closeWindow(); // 抽完自動關閉視窗
+            }
+        }
     </script>
 </body>
 </html>
